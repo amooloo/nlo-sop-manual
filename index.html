@@ -815,11 +815,27 @@
     margin: 0 auto 28px;
     padding: 0 16px;
   }
+  .four-agreements summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .four-agreements summary::-webkit-details-marker { display: none; }
   .four-agreements-header {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 16px;
+    user-select: none;
+  }
+  .four-agreements-toggle {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-weight: 500;
+    transition: transform 0.2s;
+  }
+  .four-agreements[open] .four-agreements-toggle {
+    transform: rotate(180deg);
   }
   .four-agreements-icon {
     font-size: 1.8rem;
@@ -915,14 +931,15 @@
     </svg>
     <input id="searchInput" type="search" placeholder="Search procedures, e.g. bonding, retainer, sterilization…" autocomplete="off" />
   </div>
-  <div class="four-agreements">
-    <div class="four-agreements-header">
+  <details class="four-agreements" id="four-agreements-details" open>
+    <summary class="four-agreements-header">
       <span class="four-agreements-icon">🤝</span>
       <div>
         <div class="four-agreements-title">The Four Agreements</div>
         <div class="four-agreements-subtitle">Our guiding principles — how we show up for our patients and each other</div>
       </div>
-    </div>
+      <span class="four-agreements-toggle">▾</span>
+    </summary>
     <div class="four-agreements-grid">
       <div class="agreement-card">
         <div class="agreement-number">I</div>
@@ -953,7 +970,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </details>
 
   <div class="filters">
     <button class="filter-btn active" data-filter="all">All</button>
@@ -6266,6 +6283,14 @@
   function toggleCategory(header) {
     header.closest('.category-section').classList.toggle('collapsed');
   }
+
+  // Collapse Four Agreements by default on mobile
+  (function() {
+    var fa = document.getElementById('four-agreements-details');
+    if (fa && window.innerWidth < 700) {
+      fa.removeAttribute('open');
+    }
+  })();
 
   applyFilters();
 </script>
